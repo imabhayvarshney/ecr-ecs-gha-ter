@@ -4,7 +4,7 @@ make Simple  App
 
 mkdir ecs
 
-git clone https://github.com/razibhasan1/ecs-deploy-with-terraform.git
+git clone https://github.com/imabhayvarshney/ecr-ecs-gha-ter.git
 
 move all the file in ecs folder
 
