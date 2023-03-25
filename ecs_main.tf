@@ -6,7 +6,7 @@ provider "aws" {
 #resource "aws_ecr_repository" "my_first_ecr_repo" {
 # name = "my-first-ecr-repo" 
 #}
-resource "aws_ecr_repository" "my_first_ecr_repo" {
+resource "aws_ecr_repository" "ecr_repo" {
   name                 = "docker_ecr_repo"
   image_tag_mutability = var.immutable_ecr_repositories ? "IMMUTABLE" : "MUTABLE"
   force_delete         = true
@@ -81,7 +81,6 @@ resource "null_resource" "update_docker_fund" {
   depends_on = [aws_ecr_repository.ecr_repo, aws_ecr_lifecycle_policy.ecr_policy, aws_ecr_repository_policy.demo-repo-policy]
 }
 
-
 resource "aws_ecs_cluster" "my_cluster" {
   name = "my-cluster" 
 }
@@ -93,7 +92,8 @@ resource "aws_ecs_task_definition" "my_first_task" {
   [
     {
       "name": "my-first-task",
-      "image": "${aws_ecr_repository.my_first_ecr_repo.repository_url}",
+    # "image": "${aws_ecr_repository.my_first_ecr_repo.repository_url}",
+      "image": "${aws_ecr_repository.ecr_repo.repository_url}",
       "essential": true,
       "portMappings": [
         {
