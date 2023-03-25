@@ -16,6 +16,8 @@ jobs:
           node-version: '12.x'
       - name: Install dependencies
         run: npm install
+      - run: npm install express
+        
   Terraform:
     name: Terraform Plan & Apply
     runs-on: ubuntu-latest
@@ -49,6 +51,14 @@ jobs:
    
     - name: Check out code
       uses: actions/checkout@v2
+      
+  Push:
+    name: ECR build & push 
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout Repo
+      uses: actions/checkout@v2
     
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -69,6 +79,7 @@ jobs:
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
    
       
 
