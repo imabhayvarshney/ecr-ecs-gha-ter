@@ -22,29 +22,6 @@ resource "aws_ecr_repository" "ecr_repo" {
   }
 }
 
-resource "aws_ecr_lifecycle_policy" "ecr_policy" {
-  repository = aws_ecr_repository.ecr_repo.name
-
-  policy = <<EOF
-{
-    "rules": [
-        {
-            "rulePriority": 1,
-            "description": "Expire images older than 14 days",
-            "selection": {
-                "tagStatus": "any",
-                "countType": "sinceImagePushed",
-                "countUnit": "days",
-                "countNumber": 14
-            },
-            "action": {
-                "type": "expire"
-            }
-        }
-    ]
-}
-EOF
-}
 
 resource "aws_ecr_repository_policy" "demo-repo-policy" {
   repository = aws_ecr_repository.ecr_repo.name
@@ -70,15 +47,6 @@ resource "aws_ecr_repository_policy" "demo-repo-policy" {
     ]
   }
   EOF
-}
-
-resource "null_resource" "update_docker_fund" {
-  provisioner "local-exec" {
-    working_dir = "nginx"
-    command     = "chmod +x update-ecr.sh && sh -x update-ecr.sh"
-  }
-
-  depends_on = [aws_ecr_repository.ecr_repo, aws_ecr_lifecycle_policy.ecr_policy, aws_ecr_repository_policy.demo-repo-policy]
 }
 
 resource "aws_ecs_cluster" "my_cluster" {
