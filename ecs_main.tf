@@ -60,7 +60,6 @@ resource "aws_ecs_task_definition" "my_first_task" {
   [
     {
       "name": "my-first-task",
-    # "image": "${aws_ecr_repository.docker_ecr_repo.repository_url}",
       "image": "${aws_ecr_repository.ecr_repo.name.repository_url}",
       "essential": true,
       "portMappings": [
