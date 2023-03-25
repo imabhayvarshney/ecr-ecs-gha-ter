@@ -3,28 +3,13 @@ provider "aws" {
   region  = "us-east-1" 
 }
 
-#resource "aws_ecr_repository" "my_first_ecr_repo" {
-# name = "my-first-ecr-repo" 
-#}
-resource "aws_ecr_repository" "ecr_repo" {
-  name                 = "docker_ecr_repo"
-  image_tag_mutability = var.immutable_ecr_repositories ? "IMMUTABLE" : "MUTABLE"
-  force_delete         = true
-  image_scanning_configuration {
-    scan_on_push = true
-  }
-  encryption_configuration {
-    encryption_type = "KMS"
-  }
-  tags = {
-    Name  = "worker-repository"
-    Group = "test"
-  }
+resource "aws_ecr_repository" "my_first_ecr_repo" {
+ name = "my-first-ecr-repo" 
 }
 
 
 resource "aws_ecr_repository_policy" "demo-repo-policy" {
-  repository = aws_ecr_repository.ecr_repo.name
+  repository = aws_ecr_repository.my_first_ecr_repo
   policy     = <<EOF
   {
     "Version": "2008-10-17",
