@@ -4,12 +4,12 @@ provider "aws" {
 }
 
 resource "aws_ecr_repository" "my_first_ecr_repo" {
- name = "my_first_ecr_repo" 
+ name = "my-first-ecr-repo" 
 }
 
 
 resource "aws_ecr_repository_policy" "demo-repo-policy" {
-  repository = aws_ecr_repository.my_first_ecr_repo.my_first_ecr_repo
+  repository = aws_ecr_repository.my_first_ecr_repo.name
   policy     = <<EOF
   {
     "Version": "2008-10-17",
