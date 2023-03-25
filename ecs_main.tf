@@ -38,7 +38,6 @@ resource "aws_ecs_cluster" "my_cluster" {
   name = "my-cluster" 
 }
 
-
 resource "aws_ecs_task_definition" "my_first_task" {
   family                   = "my-first-task" # Naming our first task
   container_definitions    = <<DEFINITION
