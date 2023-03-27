@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/imabhayvarshney/ecr-ecs-gha-ter/issues"
   },
-  "homepage": "https://github.com/imabhayvarshney/ecr-ecs-gha-ter#readme"
+  "homepage": "https://github.com/imabhayvarshney/ecr-ecs-gha-ter#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
